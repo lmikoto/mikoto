@@ -1,4 +1,5 @@
 exported/**/*.zip
 anim/*.zip
+!anim/mikoto.zip
 *.tex
 *.psd

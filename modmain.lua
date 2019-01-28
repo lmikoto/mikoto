@@ -2,7 +2,7 @@ PrefabFiles = {
 	"mikoto",
     "mikoto_none",
     "fesword",
-    "mikoto_zap_fx",
+    -- "mikoto_zap_fx",
 }
 
 Assets = {
@@ -62,11 +62,11 @@ STRINGS.NAMES.MIKOTO = "Esc"
 AddModCharacter("mikoto", "FEMALE")
 
 local RECIPETABS = GLOBAL.RECIPETABS
+local TECH = GLOBAL.TECH
 
-local fesword = Recipe( "fesword", { },  RECIPETABS.WAR, {SCIENCE=0} )  --剑
-fesword.atlas = "images/inventoryimages/fesword.xml"   
+-- 铁砂之剑
+local fesword = Recipe( "fesword", {},  RECIPETABS.WAR, TECH.NONE, nil, nil, nil, nil, nil,"images/inventoryimages/fesword.xml") 
 fesword.sortkey = 4
-
-STRINGS.NAMES.FESWORD = "铁砂之剑" -- 物体在游戏中显示的名字
+STRINGS.NAMES.FESWORD = "铁砂之剑"
 STRINGS.CHARACTERS.GENERIC.DESCRIBE.FESWORD = "通过使铁砂震动而形成的类链锯，\n被砍中的话可是会见血的哦。"
 STRINGS.RECIPE_DESC.FESWORD = "用磁力聚集方圆两百米的铁砂" 

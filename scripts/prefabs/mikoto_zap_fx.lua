@@ -38,5 +38,5 @@ local function newfn() --被动1
     return inst
 end
 return
-Prefab("common/fx/shock_fx_soundless", newfn, assets) ,
+Prefab("common/fx/shock_fx_soundless", newfn, assets),
 Prefab("mikoto_zap_small",zap_small,assets,prefabs)
