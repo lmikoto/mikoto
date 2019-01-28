@@ -61,11 +61,12 @@ STRINGS.NAMES.MIKOTO = "Esc"
 -- Add mod character to mod character list. Also specify a gender. Possible genders are MALE, FEMALE, ROBOT, NEUTRAL, and PLURAL.
 AddModCharacter("mikoto", "FEMALE")
 
-local RECIPETABS = GLOBAL.RECIPETABS
+-- 制作物品栏
+local mikototab = AddRecipeTab( "物品", 999, "images/hud/mikoto_tab.xml", "mikoto_tab.tex", "mikoto")
 local TECH = GLOBAL.TECH
 
 -- 铁砂之剑
-local fesword = Recipe( "fesword", {},  RECIPETABS.WAR, TECH.NONE, nil, nil, nil, nil, nil,"images/inventoryimages/fesword.xml") 
+local fesword = Recipe( "fesword", {}, mikototab, TECH.NONE, nil, nil, nil, nil, nil,"images/inventoryimages/fesword.xml") 
 fesword.sortkey = 4
 STRINGS.NAMES.FESWORD = "铁砂之剑"
 STRINGS.CHARACTERS.GENERIC.DESCRIBE.FESWORD = "通过使铁砂震动而形成的类链锯，\n被砍中的话可是会见血的哦。"

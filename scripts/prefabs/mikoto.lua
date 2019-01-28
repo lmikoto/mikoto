@@ -37,7 +37,10 @@ end
 -- This initializes for both the server and client. Tags can be added here.
 local common_postinit = function(inst) 
 	-- Minimap icon
-	inst.MiniMapEntity:SetIcon( "mikoto.tex" )
+    inst.MiniMapEntity:SetIcon("mikoto.tex")
+    
+    -- 制作书
+    inst:AddTag("bookbuilder")
 end
 
 -- local function OnAttacked(inst, data)
@@ -78,6 +81,9 @@ local master_postinit = function(inst)
 	-- inst:AddTag("electricdamageimmune")--机器人也有这个标签，但不知道有什么用
     inst:AddTag("mikoto")
     -- inst:ListenForEvent("attacked", OnAttacked)
+
+    -- 可以读书
+    inst:AddComponent("reader")
 	
 	-- Hunger rate (optional)
 	inst.components.hunger.hungerrate = 1 * TUNING.WILSON_HUNGER_RATE
