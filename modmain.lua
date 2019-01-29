@@ -39,6 +39,8 @@ Assets = {
     Asset( "IMAGE", "bigportraits/mikoto_none.tex" ),
     Asset( "ATLAS", "bigportraits/mikoto_none.xml" ),
 
+	Asset("ATLAS", "images/hud/mikoto_tab.xml"),
+
 }
 
 AddMinimapAtlas("images/map_icons/mikoto.xml")
@@ -62,7 +64,7 @@ STRINGS.NAMES.MIKOTO = "Esc"
 AddModCharacter("mikoto", "FEMALE")
 
 -- 制作物品栏
-local mikototab = AddRecipeTab( "物品", 999, "images/hud/mikoto_tab.xml", "mikoto_tab.tex", "mikoto")
+local mikototab = AddRecipeTab( "物品", 999, "images/hud/mikoto_tab.xml", "mikoto_tab.tex", nil)
 local TECH = GLOBAL.TECH
 
 -- 铁砂之剑
