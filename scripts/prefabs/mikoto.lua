@@ -2,13 +2,44 @@ local MakePlayerCharacter = require "prefabs/player_common"
 
 
 local assets = {
-	Asset("SCRIPT", "scripts/prefabs/player_common.lua"),
+    Asset( "ANIM", "anim/mikoto.zip" ),
+    Asset("SCRIPT", "scripts/prefabs/player_common.lua"),
+    Asset("ANIM", "anim/lightning_goat_build.zip"),
+    Asset("ANIM", "anim/lightning_goat_shocked_build.zip"),
+    Asset("ANIM", "anim/lightning_goat_basic.zip"),
+    Asset("ANIM", "anim/lightning_goat_actions.zip"),
 }
 local prefabs = {}
 
 -- Custom starting inventory
 local start_inv = {
 }
+
+local function IsChargedGoat(dude)
+    return dude:HasTag("lightninggoat") and dude:HasTag("charged")
+end
+
+local function OnAttacked(inst, data)
+    if data ~= nil and data.attacker ~= nil then
+        if data.attacker.components.health ~= nil and not data.attacker.components.health:IsDead() and
+            (data.weapon == nil or ((data.weapon.components.weapon == nil or data.weapon.components.weapon.projectile == nil) and data.weapon.components.projectile == nil)) and
+            not (data.attacker.components.inventory ~= nil and data.attacker.components.inventory:IsInsulated()) then
+
+            data.attacker.components.health:DoDelta(-99, nil, inst.prefab, nil, inst)
+            if data.attacker:HasTag("player") then
+                data.attacker.sg:GoToState("electrocute")
+            end
+            local zap_fx = SpawnPrefab("mikoto_zap_small") 
+            local pos = inst:GetPosition() 
+            pos.y = pos.y + 1
+            zap_fx.Transform:SetPosition(pos:Get()) 
+            zap_fx.Transform:SetScale(2,2,2)  
+        end
+        inst.components.combat:SetTarget(data.attacker)
+        inst.components.combat:ShareTarget(data.attacker, 20, IsChargedGoat, 3)
+    end
+end
+
 
 -- When the character is revived from human
 local function onbecamehuman(inst)
@@ -43,25 +74,6 @@ local common_postinit = function(inst)
     inst:AddTag("bookbuilder")
 end
 
--- local function OnAttacked(inst, data)
--- 	if data and data.attacker and data.attacker.components.health and data.attacker ~= inst then
--- 		if data.attacker.components.health and data.attacker.components.combat and not data.attacker.components.health:IsDead() and not data.attacker:HasTag("player") 
--- 				and not (
--- 				data.attacker:HasTag("walrus") or--别想着拿反弹伤害去弹死海象爸爸
--- 				data.attacker:HasTag("bishop") or--也别想弹死主教
--- 				data.attacker:HasTag("spider_spitter")--这个既有远程也有近战，怎么分开呢......
--- 				)then
--- 					data.attacker.components.health:DoDelta((data.attacker and -2 or -1)* 40)
--- 					local zap_fx = SpawnPrefab("mikoto_zap_small") 
--- 					local pos = inst:GetPosition() 
--- 					pos.y = pos.y + 1
--- 					zap_fx.Transform:SetPosition(pos:Get()) 
--- 					zap_fx.Transform:SetScale(2,2,2)  
--- 					end
--- 		end
--- 	end
-
-
 -- This initializes for the server only. Components are added here.
 local master_postinit = function(inst)
 	-- choose which sounds this character will play
@@ -80,10 +92,12 @@ local master_postinit = function(inst)
 	
 	-- inst:AddTag("electricdamageimmune")--机器人也有这个标签，但不知道有什么用
     inst:AddTag("mikoto")
-    -- inst:ListenForEvent("attacked", OnAttacked)
+    inst:ListenForEvent("attacked", OnAttacked)
 
     -- 可以读书
     inst:AddComponent("reader")
+
+    inst:AddComponent("lootdropper")
 	
 	-- Hunger rate (optional)
 	inst.components.hunger.hungerrate = 1 * TUNING.WILSON_HUNGER_RATE
@@ -98,10 +112,12 @@ local zap = function (inst)
     local trans = inst.entity:AddTransform()
     local anim = inst.entity:AddAnimState()
     local snd = inst.entity:AddSoundEmitter()
-    --inst.Transform:SetFourFaced()
-    -- anim:SetBank("shock_railgun_fx")
-    -- anim:SetBuild("shock_railgun_fx")
+    -- inst.Transform:SetFourFaced()
+
+    anim:SetBank("shock_railgun_fx")
+    anim:SetBuild("shock_railgun_fx")
     anim:PlayAnimation("electricity")
+
     inst.entity:AddLight()
     inst.Light:Enable(true)
     inst.Light:SetRadius(2)
@@ -114,6 +130,4 @@ local zap = function (inst)
     return inst
 end
 
--- return MakePlayerCharacter("mikoto", prefabs, assets, common_postinit, master_postinit, start_inv),
--- 	Prefab("mikoto_zap", zap, assets, prefabs)
 return MakePlayerCharacter("mikoto", prefabs, assets, common_postinit, master_postinit, start_inv)

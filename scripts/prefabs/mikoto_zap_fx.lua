@@ -23,20 +23,20 @@ local zap_small = function (inst)  --被动2
     return inst
 end
 
-local function newfn() --被动1
-    local inst = CreateEntity()
-    local trans = inst.entity:AddTransform()
-    local anim = inst.entity:AddAnimState()
-    local snd = inst.entity:AddSoundEmitter()
-    inst.Transform:SetFourFaced()
-    anim:SetBank("shock_fx")
-    anim:SetBuild("shock_fx")
-    anim:PlayAnimation("shock")
-    --snd:PlaySound("dontstarve_DLC001/common/shocked")
-    inst:AddTag("fx")
-    inst:ListenForEvent("animover", function(inst) inst:Remove() end )
-    return inst
-end
-return
-Prefab("common/fx/shock_fx_soundless", newfn, assets),
-Prefab("mikoto_zap_small",zap_small,assets,prefabs)
+-- local function newfn() --被动1
+--     local inst = CreateEntity()
+--     local trans = inst.entity:AddTransform()
+--     local anim = inst.entity:AddAnimState()
+--     local snd = inst.entity:AddSoundEmitter()
+--     inst.Transform:SetFourFaced()
+--     anim:SetBank("shock_fx")
+--     anim:SetBuild("shock_fx")
+--     anim:PlayAnimation("shock")
+--     --snd:PlaySound("dontstarve_DLC001/common/shocked")
+--     inst:AddTag("fx")
+--     inst:ListenForEvent("animover", function(inst) inst:Remove() end )
+--     return inst
+-- end
+return Prefab("mikoto_zap_small",zap_small,assets,prefabs)
+-- Prefab("common/fx/shock_fx_soundless", newfn, assets),
+-- Prefab("mikoto_zap_small",zap_small,assets,prefabs)

@@ -2,7 +2,7 @@ PrefabFiles = {
 	"mikoto",
     "mikoto_none",
     "fesword",
-    -- "mikoto_zap_fx",
+    "mikoto_zap_fx",
 }
 
 Assets = {
@@ -73,3 +73,10 @@ fesword.sortkey = 4
 STRINGS.NAMES.FESWORD = "铁砂之剑"
 STRINGS.CHARACTERS.GENERIC.DESCRIBE.FESWORD = "通过使铁砂震动而形成的类链锯，\n被砍中的话可是会见血的哦。"
 STRINGS.RECIPE_DESC.FESWORD = "用磁力聚集方圆两百米的铁砂" 
+
+-- book 
+AddRecipe("book_birds", {Ingredient("papyrus", 2), Ingredient("bird_egg", 2)},mikototab, TECH.NONE, nil, nil, nil, nil,"bookbuilder")
+AddRecipe("book_gardening", {Ingredient("papyrus", 2), Ingredient("seeds", 1), Ingredient("poop", 1)},mikototab, TECH.NONE, nil, nil, nil, nil,"bookbuilder")
+AddRecipe("book_sleep", {Ingredient("papyrus", 2), Ingredient("nightmarefuel", 2)}, mikototab, TECH.NONE, nil, nil, nil, nil,"bookbuilder")
+AddRecipe("book_brimstone", {Ingredient("papyrus", 2), Ingredient("redgem", 1)},mikototab, TECH.NONE, nil, nil, nil, nil,"bookbuilder")
+AddRecipe("book_tentacles", {Ingredient("papyrus", 2), Ingredient("tentaclespots", 1)},mikototab, TECH.NONE, nil, nil, nil, nil,"bookbuilder")
